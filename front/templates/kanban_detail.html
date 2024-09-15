@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ todo.kanban_name }} Kanban</title>
+    <link rel="stylesheet" href="{% static 'front/styles.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <script src="{% static 'front/script.js' %}" defer></script>
+    <meta name="csrf-token" content="{{ csrf_token }}">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>{{ todo.kanban_name }}</h1>
+            <a href="{% url 'kanban-list' %}" class="back-link">Back to Kanban List</a>
+        </div>
+    </header>
+    <div id="kanban-container">
+        {% for column in columns %}
+            <div class="kanban-column" data-column-id="{{ column.id }}" data-column-position="{{ column.position }}">
+                <h3>{{ column.name }}</h3>
+                <ul id="column-{{ column.id }}" class="task-list" data-column-id="{{ column.id }}">
+                    {% for task in column.tasks.all %}
+                        <li class="task-item" data-task-id="{{ task.id }}">
+                            {{ task.task_name }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% empty %}
+            <p>No columns available.</p>
+        {% endfor %}
+        <!-- Button to add a new column -->
+        <div class="add-column-button-container">
+            <button id="add-column-button">+</button>
+        </div>
+    </div>
+
+    <!-- Form to add a new column -->
+    <div class="add-column-form hidden" id="add-column-form">
+        <h2>Add New Column</h2>
+        <form id="new-column-form">
+            <label for="column-name">Column Name:</label>
+            <input type="text" id="column-name" name="column_name" required>
+            <input type="hidden" id="todo-id" value="{{ todo.id }}">
+            <button type="submit">Add Column</button>
+            <button type="button" id="cancel-column-button">Cancel</button>
+        </form>
+    </div>
+</body>
+</html>

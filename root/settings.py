@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# USER
+AUTH_USER_MODEL = 'todoapi.User'
+
 
 # Application definition
 
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     "rest_framework",
     # apps
     "todoapi",
+    "front"
 ]
 
 MIDDLEWARE = [
