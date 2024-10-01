@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from todoapi.models import ToDo
+from todoapi.models import ToDo, User
 
 def kanban_list(request):
     todos = ToDo.objects.all()

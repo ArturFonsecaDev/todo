@@ -6,16 +6,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kanban List</title>
-    <link rel="stylesheet" href="{% static 'front/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'front/kanban-list/style.css' %}">
 </head>
 <body>
-    <h1>Kanban List</h1>
-    <ul>
-        {% for todo in todos %}
-            <li><a href="{% url 'kanban-detail' todo.kanban_name %}">{{ todo.kanban_name }}</a></li>
-        {% empty %}
-            <li>No Kanbans available.</li>
-        {% endfor %}
-    </ul>
+    <header>
+        <h1>Kanban List</h1>
+    </header>
+    
+    <main>
+        <section class="kanban-container">
+            <ul class="kanban-list">
+                {% for todo in todos %}
+                    <li class="kanban-item">
+                        <a href="{% url 'kanban-detail' todo.kanban_name %}" class="kanban-link">{{ todo.kanban_name }}</a>
+                    </li>
+                {% empty %}
+                    <li class="no-kanbans">No Kanbans available.</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Kanban Application</p>
+    </footer>
 </body>
 </html>
